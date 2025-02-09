@@ -12,32 +12,33 @@ This repository documents the technical process of crawling and scraping data fr
 - [Data Analysis & Insights](#data-analysis--insights)
 - [Scraping Additional Data for AI Applications](#scraping-additional-data-for-ai-applications)
 - [Broader Industry Applications](#broader-industry-applications)
+- [Sample Data](#sample-data)
 
 ## Data Collection Process
 
 ### 1. Crawling Business Data with Octoparse
-- Extract business information from Google Maps, including:
-  - **Business name**
-  - **Address**
-  - **Website**
-  - **Ratings and reviews**
-- Crawl all reviews associated with each business.
-- Estimate customer volume and revenue using:
-  - **Average ticket size**
-  - **Customer-review ratio** (typically 5-10%)
+- Crawl all businesses using Octoparse by generating keyword lists for all cities and states in the US, modifying them with relevant keywords (e.g., "Botox in Washington DC", "Facials in San Francisco, California").
+- These iterations ensure all relevant businesses are captured.
+- Clean the data to remove potential duplicates.
+- Import the cleaned data into the **clinics_usa** table using the `create_clinics_table` script.
 
-### 2. Identifying Online Booking Systems
+### 2. Crawling Business Reviews
+- Use Octoparse to crawl reviews from the Google Maps listings.
+- Upload the reviews to the **clinics_usa_reviews** table using the `create_reviews_table` script.
+- Convert review timestamps (e.g., "9 months ago", "2 years ago") into a standard date format based on the import date.
+
+### 3. Identifying Online Booking Systems
 - Use **Cursor** and **Selenium** to:
   - Visit business websites.
   - Search for booking-related text ("Book Now," "Schedule Appointment," etc.).
   - Extract booking page links.
-- Analyze extracted URLs to identify subdomain patterns indicating software providers (e.g., `appname.booking.clinicname.com`).
+- Store the results in the **website_scraping** table using the `find_booking_buttons` script.
 
-### 3. Advanced Software Identification
-- Clean and filter extracted URLs.
-- Identify and count recurring booking software providers.
-- Visit booking pages without an identifiable subdomain to analyze source code for software-related keywords.
-- Match businesses to their booking software providers.
+### 4. Analyzing Booking Software Patterns
+- Analyze extracted URLs to identify subdomain patterns indicating software providers using the `url_pattern_analysis` script.
+- Manually clean and define software categories.
+- Upload the cleaned data into the **software** table using the `import_softwares` script.
+- Match businesses to their software providers using the `match_software` script.
 
 ## Data Cleaning & Storage
 - To store and process data efficiently, create the following SQL tables:
@@ -76,6 +77,14 @@ This methodology is applicable across various industries for competitive analysi
 - **Restaurants** – Detecting online reservation systems and food delivery platform usage (e.g., Uber Eats, OpenTable).
 
 This approach enables efficient **data-driven decision-making** and market analysis through automation and AI integration.
+
+## Sample Data
+- The repository contains **CSV files** with sample data for each of the tables mentioned:
+  - `clinics_usa.csv`
+  - `clinics_usa_reviews.csv`
+  - `software.csv`
+  - `website_scraping.csv`
+- These files provide example data to understand the structure and format of the collected information.
 
 ---
 ### 🚀 Contributions
