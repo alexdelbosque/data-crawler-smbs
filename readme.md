@@ -8,6 +8,7 @@ This repository documents the technical process of crawling and scraping data fr
   - [Crawling Business Data with Octoparse](#1-crawling-business-data-with-octoparse)
   - [Identifying Online Booking Systems](#2-identifying-online-booking-systems)
   - [Advanced Software Identification](#3-advanced-software-identification)
+- [Data Cleaning & Storage](#data-cleaning--storage)
 - [Data Analysis & Insights](#data-analysis--insights)
 - [Scraping Additional Data for AI Applications](#scraping-additional-data-for-ai-applications)
 - [Broader Industry Applications](#broader-industry-applications)
@@ -37,6 +38,19 @@ This repository documents the technical process of crawling and scraping data fr
 - Identify and count recurring booking software providers.
 - Visit booking pages without an identifiable subdomain to analyze source code for software-related keywords.
 - Match businesses to their booking software providers.
+
+## Data Cleaning & Storage
+- To store and process data efficiently, create the following SQL tables:
+  - **clinics_usa** – Stores business information from Google Maps.
+  - **clinics_usa_reviews** – Stores customer reviews, ratings, and review dates.
+  - **software** – Stores identified booking software providers and their usage statistics.
+  - **website_scraping** – Stores results from website scraping, including booking button detection.
+- **Review Date Conversion:**
+  - Google Maps provides review timestamps in text format (e.g., "9 months ago" or "2 years ago").
+  - Convert these timestamps into a standard date format using the data import timestamp.
+  - Example logic:
+    - If the current date is `2024-02-01` and a review says "2 years ago," it is converted to `2022-02-01`.
+    - If a review says "9 months ago," it is converted to `2023-05-01`.
 
 ## Data Analysis & Insights
 - **SQL tables** store extracted data for easy querying and visualization.
@@ -72,4 +86,3 @@ Feel free to contribute by submitting **issues** or **pull requests** to improve
 - **Selenium**
 - **Python**
 - **SQL**
-
